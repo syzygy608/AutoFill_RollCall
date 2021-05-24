@@ -17,6 +17,7 @@ for i in class_:
         i.click()
     except Exception as e:
         print(e)
+time.sleep(1)
 for i in range(0, 14):
     driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
 time.sleep(1)
