@@ -1,4 +1,6 @@
 {
+    "email" : "Your_Email",
+    "password" : "Your_Passsword",
     "class" : "Your_Class",
     "number" : "Your_Number",
     "name" : "Your_Name",
