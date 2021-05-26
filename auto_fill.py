@@ -13,10 +13,10 @@ print("新竹高中點名表自動填寫程式 by Syzygy0\n請記得至config.js
 address = input("[請在此輸入點名表網址] : ")
 driver = webdriver.Chrome(os.path.join(csfp, 'chromedriver')) 
 driver.get(str(address)) 
-time.sleep(2)
-
-if (driver.find_elements_by_xpath("/html/body/div[2]/div/div[2]/div[3]/div[2]/span")):
-    driver.find_element_by_xpath("/html/body/div[2]/div/div[2]/div[3]/div[2]/span").click()
+time.sleep(1)
+if not driver.find_elements_by_xpath("//*[@id=\"mG61Hd\"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div[1]/div[1]"):
+    if driver.find_elements_by_xpath("/html/body/div[2]/div/div[2]/div[3]/div[2]/span"):
+        driver.find_element_by_xpath("/html/body/div[2]/div/div[2]/div[3]/div[2]/span").click()
     time.sleep(1)
     driver.find_element_by_id("identifierId").send_keys(jdata["email"])
     time.sleep(1)
