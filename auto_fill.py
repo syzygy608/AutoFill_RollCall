@@ -2,13 +2,32 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import json
 import time
+import os
 
-with open('settings.json', 'r', encoding = 'utf8') as jfile:
+csfp = os.path.dirname(os.path.realpath(__file__))
+json_file = os.path.join(csfp, "config.json")
+with open(json_file, 'r', encoding = 'utf8') as jfile:
     jdata = json.load(jfile)
 
-address = input()
-driver = webdriver.Chrome(r'./chromedriver') 
+print("新竹高中點名表自動填寫程式 by Syzygy0\n請記得至config.json更改裡面的資料為個人資料")
+address = input("[請在此輸入點名表網址] : ")
+driver = webdriver.Chrome(os.path.join(csfp, 'chromedriver')) 
 driver.get(str(address)) 
+time.sleep(2)
+
+if (driver.find_elements_by_xpath("/html/body/div[2]/div/div[2]/div[3]/div[2]/span")):
+    driver.find_element_by_xpath("/html/body/div[2]/div/div[2]/div[3]/div[2]/span").click()
+    time.sleep(1)
+    driver.find_element_by_id("identifierId").send_keys(jdata["email"])
+    time.sleep(1)
+    driver.find_element_by_id("identifierNext").click()
+    time.sleep(2)
+    driver.find_element_by_name("password").send_keys(jdata["password"])
+    time.sleep(1)
+    driver.find_element_by_id("passwordNext").click()
+    time.sleep(4)
+else:
+    time.sleep(1)
 driver.find_element_by_xpath("//*[@id=\"mG61Hd\"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div[1]/div[1]").click()
 time.sleep(1)
 class_ = driver.find_elements_by_xpath(f"//div//span[contains(., '{jdata['class']}')]")
@@ -34,5 +53,5 @@ driver.find_element_by_xpath("//*[@id=\"mG61Hd\"]/div[2]/div/div[2]/div[3]/div/d
 driver.find_element_by_xpath("//*[@id=\"mG61Hd\"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div/div[1]/input").send_keys(jdata['id'])
 time.sleep(1)
 driver.find_element_by_xpath("//*[@id=\"mG61Hd\"]/div[2]/div/div[3]/div[1]/div/div/span").click()
-time.sleep(5)
+time.sleep(2)
 driver.close()
